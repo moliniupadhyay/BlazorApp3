@@ -1,4 +1,4 @@
-﻿@page "/counter"
+@page "/counter/{initialcount:int?}"
 
 <PageTitle>Counter</PageTitle>
 
@@ -15,8 +15,9 @@ else
     <p>The count is odd.</p>
 }
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<p>Initialcount= @InitialCount</p>
 
 @if (currentCount % 5 == 0 && currentCount != 0)
 {
@@ -27,12 +28,17 @@ else
 @code {
     private int currentCount = 0;
 
+    protected override void OnInitialized(){
+       currentCount=InitialCount;
+    }
+    
+    [Parameter]
+    public int InitialCount {get;set;}
     private void IncrementCount()
     {
         currentCount++;
     }
 }
-
 <h3>Count Number Repeated:</h3>
 @for (int i = 0; i < currentCount; i++)
 {
